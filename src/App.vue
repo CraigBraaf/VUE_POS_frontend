@@ -18,10 +18,6 @@ export default {
 </script>
 <style>
 
-/* body {
-  background-image: url('https://wallpaperaccess.com/full/7761092.jpg');
-} */
-
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

@@ -4,10 +4,11 @@ import Products from '@/views/Products.vue'
 import Cart from '@/views/Cart.vue'
 import Login from '@/views/Login.vue'
 import Register from '@/views/Register.vue'
+import Profile from '@/views/Profile.vue'
 
 const routes = [
   {
-    path: '/Home',
+    path: '/',
     name: 'Home',
     component: Home
   },
@@ -31,9 +32,12 @@ const routes = [
     name: 'Register',
     component: Register
   },
-
-
-]
+  {
+    path: '/Profile',
+    name: 'Profile',
+    component: Profile
+  },
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
@@ -41,16 +45,12 @@ const router = createRouter({
 });
 
 // router.beforeEach((to, from, next) => {
-//   const publicPages = ['/Home', '/Login', '/Register'];
-//   const authRequired = !publicPages.includes(to.path);
+//   const publicPages = ['/Login', '/Register', 'Home'];
+//   const authrequired = !publicPages.includes(to.path);
 //   const loggedIn = localStorage.getItem('user');
-//   // trying to access a restricted page + not logged in
-//   // redirect to login page
-//   if (authRequired && !loggedIn) {
-//     next('/Home');
-//   } else {
-//     next();
-//   }
+
+//   if(to.path == '/Products' || to.path == '/Cart' && !loggedIn) next({name: 'Register'})
+//   else next()
 // });
 
 export default router

@@ -1,36 +1,106 @@
 <template>
-    <div class="content">
-      <div class="flex-div">
-        <div class="name-content">
-            <h2>ZC BEAUTY</h2>
-          <h1 class="logo">Sign Up Today!</h1>
-          <p>Buy your fav Beauty Products!</p>
-        </div>
-          <form @Submit.prevent="handleSubmit">
-              <input type="Username" placeholder="Username">
-            <input type="text" placeholder="Email or Phone Number">
-            <input type="Password" placeholder="Password">
-            <input type="Password" placeholder="Repeat Password">
-            <button class="login">Create Account</button>
+  <div class="container">
+    <div class="row d-flex align-items-center justify-content-center">
+      <div class="col-md-6">
+        <div class="card2 px-5 py-5">
+          <form @submit.prevent="register">
+            <h3 class="mt-3">Register Now <br /></h3>
+            <div class="form-input">
+              <i class="fa fa-user"></i>
+              <input
+                type="text"
+                class="form-control"
+                v-model="user_fullname"
+                placeholder="User name"
+                required
+              />
+            </div>
+            <div class="form-input">
+              <i class="fa fa-envelope"></i>
+              <input
+                type="text"
+                class="form-control"
+                v-model="email"
+                placeholder="Email address"
+                required
+              />
+            </div>
+            <div class="form-input">
+              <i class="fa fa-user"></i>
+              <input
+                type="text"
+                class="form-control"
+                v-model="phone_number"
+                placeholder="Phone number"
+                required
+              />
+            </div>
+            <div class="form-input">
+              <i class="fa fa-lock"></i>
+              <input
+                type="password"
+                class="form-control"
+                v-model="password"
+                placeholder="password"
+                required
+              />
+            </div>
+
+            <button class="btn btn-primary mt-4 signup" type="submit">
+              Sign up!
+            </button>
+
+            <div class="text-center mt-5">
+              <span>Already a member?</span>
+              <router-link :to="{ name: 'Login' }" class="text-decoration-none">
+                Login</router-link
+              >
+            </div>
           </form>
+        </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
 export default {
-     name: 'Register',
-     data() {
-         return {
-            
-         }
-     },
-     method: {
-         handleSubmit(){
-             console.log('Account Registered!')
-         }
-     },
-}
+  data() {
+    return {
+      user_fullname: "",
+      email: "",
+      phone_number: "",
+      password: "",
+    };
+  },
+  methods: {
+    register() {
+      console.log(this.password);
+      fetch("https://userproducts.herokuapp.com/users/", {
+        method: "POST",
+        body: JSON.stringify({
+          user_fullname: this.user_fullname,
+          email: this.email,
+          phone_number: this.phone_number,
+          password: this.password,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          console.log(json);
+          alert("User registered");
+          localStorage.setItem("jwt", json.jwt);
+          this.$router.push({ name: "Login" });
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    },
+  },
+};
 </script>
 
 <style>
@@ -260,6 +330,6 @@ form .create-account:hover {
     .header {
       height: 90vmax;
     }
-  }  
+  }
 }
 </style>

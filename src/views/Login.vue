@@ -1,29 +1,79 @@
 <template>
-    <div class="content">
-      <div class="flex-div">
-        <div class="name-content">
-          <h1 class="logo">ZC BEAUTY</h1>
-          <p>Connect with friends and the world around you on Facebook.</p>
+  <section>
+    <div class="container">
+      <div class="row d-flex align-items-center justify-content-center">
+        <div class="col-md-6">
+          <div class="card1 px-5 py-5">
+            <form  @submit.prevent="login">
+            <h3 class="mt-3">Login <br /></h3>
+
+            <div class="form-input">
+              <i class="fa fa-envelope"></i>
+              <input
+                type="text"
+                class="form-control"
+                v-model="user_fullname"
+                placeholder="Username"
+              />
+            </div>
+
+            <div class="form-input">
+              <i class="fa fa-lock"></i>
+              <input type="text"
+               class="form-control" 
+               v-model="password"
+               placeholder="password" />
+            </div>
+
+            <button class="btn btn-primary mt-4 signup" type="submit">Sign up!</button>
+          
+            <div class="text-center mt-5">
+              <span>Already a member?</span>
+              <router-link :to="{ name: 'Login' }" class="text-decoration-none">
+                Login</router-link
+              >
+            </div>
+            </form>
+          </div>
         </div>
-          <form>
-            <input type="text" placeholder="Email or Phone Number" required />
-            <input type="password" placeholder="Password" required>
-            <button class="login">Log In</button>
-            <hr>
-            <button class="create-account" :to="{name: 'Register'}">Create New Account</button>
-          </form>
       </div>
     </div>
-
-
+  </section>
 </template>
-
 <script>
 export default {
-    name: 'Login'
-}
+  data() {
+    return {
+      user_fullname: "",
+      password: "",
+    };
+  },
+  methods: {
+    login() {
+      fetch("https://userproducts.herokuapp.com/users/", {
+        method: "POST",
+        body: JSON.stringify({
+          user_fullname: this.user_fullname,
+          password: this.password,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          console.log(json)
+          localStorage.setItem("jwt", json.jwt);
+          alert("User logged in");
+          this.$router.push({ name: "Products" });
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    },
+  },
+};
 </script>
-
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
@@ -254,4 +304,7 @@ form .create-account:hover {
   }  
 }
 
+.error {
+  color: red;
+}
 </style>

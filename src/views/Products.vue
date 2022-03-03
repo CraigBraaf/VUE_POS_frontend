@@ -2,131 +2,9 @@
     
       <div class="container">
         <div class="Productheading">Choose your product:</div>
-    
-        <div
-          class="collapse navbar-collapse justify-content-end"
-          id="navbarSupportedContent"
-        >
-          <ul class="navbar-nav mb-2 mb-lg-0 mr-auto">
-            <li class="nav-item">
-              <a
-                class="btn btn-primary me-3 active"
-                aria-current="page"
-                href="./index.html"
-                >Home</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="btn btn-primary me-3 position-relative"
-                href="./cart.html"
-                >Cart
-                <span
-                  id="badge"
-                  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                ></span
-              ></a>
-            </li>
-            <li class="nav-item">
-              <!-- Button trigger modal -->
-              <button
-                type="button"
-                class="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#addProductModal"
-              >
-                Add a product
-              </button>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-    <div
-                class="modal fade"
-                id="addProductModal"
-                tabindex="-1"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-              >
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">
-                        Add product
-                      </h5>
-                      <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                      ></button>
-                    </div>
-                    <div class="modal-body">
-                      <div class="mb-3">
-                        <label for="addTitle" class="form-label">Title</label>
-                        <input
-                          class="form-control"
-                          type="text"
-                          name="addTitle"
-                          id="addTitle"
-                        />
-                      </div>
-                      <div class="mb-3">
-                        <label for="" class="form-label">Category</label>
-                        <select
-                          class="form-select"
-                          name="addCategory"
-                          id="addCategory"
-                        >
-                          <option value="Leashes">Leashes</option>
-                          <option value="Treats">Treats</option>
-                          <option value="Cages">Cages</option>
-                          <option value="Jackets">Jackets</option>
-                          
-
-                        </select>
-                      </div>
-                      <div class="mb-3">
-                        <label for="addPrice" class="form-label">Price</label>
-                        <input
-                          class="form-control"
-                          type="text"
-                          name="addPrice"
-                          id="addPrice"
-                        />
-                      </div>
-                      <div class="mb-3">
-                        <label for="addImg" class="form-label">Image URL</label>
-                        <input
-                          class="form-control"
-                          type="text"
-                          name="addImg"
-                          id="addImg"
-                        />
-                      </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button
-                        type="button"
-                        class="btn btn-secondary"
-                        data-bs-dismiss="modal"
-                      >
-                        Close
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-primary"
-                        data-bs-dismiss="modal"
-                        onclick="createProduct()"
-                      >
-                        Create Product
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-    <div class="container d-flex justify-content-end mb-3 mt-5 pt-4">
+     </div>
+       
+    <div class="container d-flex justify-content-end m-5 mb-4 mt-5 pt-4">
       <div class="d-flex w-25 ms-3">
         <label for="" class="form-label">Sort by category</label>
         <select
@@ -140,6 +18,8 @@
           <option value="Hairdryer">Hair Dryer</option>
           <option value="Eyeshadow">Eye Shadow Pallatte</option>
           <option value="FlatIron">Flat Iron</option>
+          <option value="FlatIron">HandBags</option>
+          <option value="FlatIron">Lipsticks</option>
 
         </select>
       </div>
@@ -166,17 +46,175 @@
     <div id="products" class="container d-flex mb-3">
       
     </div>
+
+    <div class="d-flex container">
+  
+ <div class="product-card" v-for="product of products" :key="product._id">
+		<div class="product-tumb">
+			<img :src="product.img" alt="">
+		</div>
+		<div class="product-details">
+			<h4><a href="">{{product.title}}</a></h4>
+			<p>{{product.description}}</p>
+			<div class="product-bottom-details">
+				<div class="product-price">{{product.price}}</div>
+				<div class="product-links">
+					<a href=""><i class="fa fa-heart"></i></a>
+					<a href=""><i class="fa fa-shopping-cart"></i></a>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+
+
+</div>
 </template>
 
 <script>
 export default {
+       data() {
+         return {
+           products: []
+         }
+       },
 
-
+       mounted() {
+         fetch("https://userproducts.herokuapp.com/products")
+         .then(res => res.json())
+         .then(data => this.products = data)
+         .catch((err) => console.log(err.message));
+       }
 }
+
+
 </script>
 
 <style>
-.Productheading {
-     font-size: 90px;
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
+*
+{
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+body
+{
+    font-family: 'Roboto', sans-serif;
+}
+a
+{
+    text-decoration: none;
+}
+.product-card {
+    width: 380px;
+    position: relative;
+    box-shadow: 0 2px 7px #dfdfdf;
+    margin: 50px auto;
+    background: #fafafa;
+}
+
+.badge {
+    position: absolute;
+    left: 0;
+    top: 20px;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 700;
+    background: red;
+    color: #fff;
+    padding: 3px 10px;
+}
+
+.product-tumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    padding: 50px;
+    background: #f0f0f0;
+}
+
+.product-tumb img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.product-details {
+    padding: 30px;
+}
+
+.product-catagory {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #ccc;
+    margin-bottom: 18px;
+}
+
+.product-details h4 a {
+    font-weight: 500;
+    display: block;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+    color: #363636;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.product-details h4 a:hover {
+    color: #fbb72c;
+}
+
+.product-details p {
+    font-size: 15px;
+    line-height: 22px;
+    margin-bottom: 18px;
+    color: #999;
+}
+
+.product-bottom-details {
+    overflow: hidden;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.product-bottom-details div {
+    float: left;
+    width: 50%;
+}
+
+.product-price {
+    font-size: 18px;
+    color: #fbb72c;
+    font-weight: 600;
+}
+
+.product-price small {
+    font-size: 80%;
+    font-weight: 400;
+    text-decoration: line-through;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.product-links {
+    text-align: right;
+}
+
+.product-links a {
+    display: inline-block;
+    margin-left: 5px;
+    color: #e1e1e1;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+.product-links a:hover {
+    color: #fbb72c;
 }
 </style>

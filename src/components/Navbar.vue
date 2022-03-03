@@ -3,7 +3,8 @@
     <router-link :to="{name: 'Login'}">Login</router-link> |
     <router-link :to="{name: 'Register'}">Register</router-link> |
     <router-link :to="{name: 'Products'}">Products</router-link> |
-    <router-link :to="{name: 'Cart'}">Cart</router-link> 
+    <router-link :to="{name: 'Cart'}">Cart</router-link> | 
+    <router-link :to="{name: 'Profile'}">Profile</router-link> 
 </template>
 
 <script>
