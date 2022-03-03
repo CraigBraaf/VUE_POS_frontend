@@ -19,13 +19,13 @@
 
             <div class="form-input">
               <i class="fa fa-lock"></i>
-              <input type="text"
+              <input type="password"
                class="form-control" 
                v-model="password"
                placeholder="password" />
             </div>
 
-            <button class="btn btn-primary mt-4 signup" type="submit">Sign up!</button>
+            <button class="btn btn-primary mt-4 signup" type="submit">Sign in!</button>
           
             <div class="text-center mt-5">
               <span>Already a member?</span>

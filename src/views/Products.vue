@@ -113,7 +113,7 @@ a
     width: 380px;
     position: relative;
     box-shadow: 0 2px 7px #dfdfdf;
-    margin: 50px auto;
+    margin: 10px !important;
     background: #fafafa;
 }
 
